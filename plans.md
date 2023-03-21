@@ -47,7 +47,7 @@
 
     - https://www.theodinproject.com/lessons/javascript-working-with-apis: resource on working with fetch and APIs from frontend perspective
 
-    1. Build frontend for people to read and comment on your posts:
+    1. Build frontend for people to read and comment on your posts
 
     2. Build frontend for you to author and edit your posts. Useful features include:
 
