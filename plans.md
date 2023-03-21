@@ -4,26 +4,25 @@
 - One front-end: for people to read and comment on your blog posts
 - Other front-end: for you to write, edit and publish posts
 
-1. Design backend models and schemas:
+1. DONE Design backend models and schemas:
 
-    1. Want to authenticate blog poster given a username and password, so set up a user model, although there will be just one user (the blogger)
+    1. CONSIDERED Want to authenticate blog poster given a username and password, so set up a user model, although there will be just one user (the blogger)
 
-    2. Blog should have posts and comments
+    2. CONSIDERED Blog should have posts and comments
 
-    3. Make visitors leave email with comments
+    3. CONSIDERED Make visitors leave email with comments
 
-    4. Display timestamps for posts
+    4. CONSIDERED Display timestamps for posts
 
-    5. Display timestamps for comments
+    5. CONSIDERED Display timestamps for comments
 
-    6. Posts should have a title
+    6. CONSIDERED Posts should have a title
     
-    7. Comments should not have a title
+    7. CONSIDERED Comments should not have a title
 
-    8. Give each post an "isPublished" that can be either true or false, so some posts can 
-    be stored in the database without being published, and toggling of whether a post is published can be done
+    8. CONSIDERED Give each post an "isPublished" that can be either true or false, so some posts can be stored in the database without being published, and toggling of whether a post is published can be done
 
-2. Set up express app
+2. DONE Set up express app
 
 3. Define models in mongoose
 
