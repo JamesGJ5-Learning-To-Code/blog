@@ -10,7 +10,7 @@
 
     2. Blog should have posts and comments
 
-    3. Make users leave email with comments
+    3. Make visitors leave email with comments
 
     4. Display timestamps for posts
 
