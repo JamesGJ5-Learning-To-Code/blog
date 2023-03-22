@@ -24,7 +24,7 @@
 
 2. DONE Set up express app
 
-3. Define models in mongoose
+3. DONE Define models in mongoose
 
 4. Set up routes and controllers RESTfully:
 
