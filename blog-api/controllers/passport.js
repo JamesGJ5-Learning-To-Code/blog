@@ -17,7 +17,6 @@ passport.use(new LocalStrategy({
                 }
                 done(null, user, {message: "Logged in Successfully"});
             })
-            // TODO: probably can just use "done" rather than "done(err)"
             .catch(err => done(err));
     }
 ));
