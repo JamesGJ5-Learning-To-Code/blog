@@ -45,9 +45,11 @@
     1. DONE Set up skeleton of routing system for resources
     2. DONE Decide what to do for authentication and JSON web tokens
         - Going to follow https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
-    3. Implement authentication and JSON web tokens
-    4. Fill out routes with controllers
-    5. Implement bcrypt
+    3. Set up database remotely
+    4. Set up database locally
+    5. Implement authentication and JSON web tokens
+    6. Fill out routes with controllers
+    7. Implement bcrypt
 
 5. WILL SKIP FOR NOW Build frontends:
 
