@@ -4,7 +4,7 @@
 const express = require("express");
 const commentControllers = require("../controllers/commentControllers");
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.get("/", commentControllers.getComments);
 router.post("/", commentControllers.postComment);

@@ -8,7 +8,6 @@ const router = express.Router();
 // "comments" will be treated as a postid below
 // TODO: make sure it's safe enough to use commentRouter as it is being used below, given 
 // the postid confusion possibility
-router.use("/comments", commentRouter);
 
 router.get("/", postControllers.getPosts);
 router.get("/:postid", postControllers.getPost);
@@ -16,5 +15,7 @@ router.post("/", postControllers.postPost);
 router.put("/:postid", postControllers.putPost);
 router.delete("/:postid", postControllers.deletePost);
 // TODO: consider adding more routes
+
+router.use("/:postid/comments", commentRouter);
 
 module.exports = router;
