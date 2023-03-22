@@ -8,7 +8,6 @@ exports.loginPost = (req, res, next) => {
             // what error mongoose might return previously etc.
             return res.status(400).json({
                 message: "Something is not right",
-                // TODO: used ES6 feature below, make sure it doesn't cause issues
                 user,
             });
         }
