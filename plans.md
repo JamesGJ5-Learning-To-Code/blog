@@ -54,6 +54,7 @@
     7. Protect whichever routes must be protected, as in https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
     8. Tidy up directory structure
     9. Implement bcrypt
+    10. Set status codes where apt
 
 5. WILL SKIP FOR NOW Build frontends:
 
