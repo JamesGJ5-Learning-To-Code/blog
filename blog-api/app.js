@@ -1,6 +1,13 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
 var express = require('express');
 var logger = require('morgan');
 const APIRouter = require("./routes/apiRouter");
+
+main().catch(console.log);
+async function main() {
+    await mongoose.connect(process.env.DEV_CONNECTION_STRING);
+}
 
 var app = express();
 
