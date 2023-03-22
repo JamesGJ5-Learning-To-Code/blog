@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get("/", commentControllers.getComments);
 router.post("/", commentControllers.postComment);
-router.put("/:postid", commentControllers.putComment);
-router.delete("/:postid", commentControllers.deleteComment);
+router.put("/:commentid", commentControllers.putComment);
+router.delete("/:commentid", commentControllers.deleteComment);
 // TODO: consider adding more routes
 
 module.exports = router;
