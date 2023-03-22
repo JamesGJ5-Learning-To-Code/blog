@@ -6,6 +6,8 @@ const router = express.Router();
 
 // NOTE: ensure that there are routes in commentRouter, otherwise a supplied path of 
 // "comments" will be treated as a postid below
+// TODO: make sure it's safe enough to use commentRouter as it is being used below, given 
+// the postid confusion possibility
 router.use("/comments", commentRouter);
 
 router.get("/", postControllers.getPosts);
