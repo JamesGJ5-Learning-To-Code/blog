@@ -1,5 +1,5 @@
 exports.getComments = (req, res, next) => {
-    res.send("TODO: implement getComments")
+    res.send("TODO: implement getComments");
 };
 
 exports.postComment = (req, res, next) => {
