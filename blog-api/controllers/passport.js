@@ -10,15 +10,12 @@ passport.use(new LocalStrategy({
         passwordField: "password",
     },
     (username, password, done) => {
-        // TODO: reconsider whether certain return statements below are needed; some come 
-        // from https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8. The 
-        // first and last "return" operators probably aren't necessary
-        return User.findOne({username, password})
+        User.findOne({username, password})
             .then(user => {
                 if (!user) {
                     return done(null, false, {message: "Incorrect username or password."})
                 }
-                return done(null, user, {message: "Logged in Successfully"});
+                done(null, user, {message: "Logged in Successfully"});
             })
             // TODO: probably can just use "done" rather than "done(err)"
             .catch(err => done(err));
