@@ -1,6 +1,6 @@
 var express = require('express');
 var logger = require('morgan');
-const APIRouter = require("./routes");
+const APIRouter = require("./routes/apiRouter");
 
 var app = express();
 
