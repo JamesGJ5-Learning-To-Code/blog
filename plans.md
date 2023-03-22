@@ -51,7 +51,8 @@
     4. DONE Set up database locally
     5. Implement authentication and JSON web tokens
     6. Fill out routes with controllers
-    7. Implement bcrypt
+    7. Protect whichever routes must be protected
+    8. Implement bcrypt
 
 5. WILL SKIP FOR NOW Build frontends:
 
