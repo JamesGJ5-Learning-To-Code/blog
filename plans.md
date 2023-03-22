@@ -45,8 +45,10 @@
     1. DONE Set up skeleton of routing system for resources
     2. DONE Decide what to do for authentication and JSON web tokens
         - Going to follow https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
-    3. Set up database remotely
-    4. Set up database locally
+    3. DONE Set up database remotely
+        - It has been populated with test database containing collections "users", "posts" and "comments"
+        - A document for the blogger has been added to the aforementioned "users" collection
+    4. DONE Set up database locally
     5. Implement authentication and JSON web tokens
     6. Fill out routes with controllers
     7. Implement bcrypt
