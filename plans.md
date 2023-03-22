@@ -42,6 +42,11 @@
 
         5. https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8: using convenient Passport functions to help with JWT, if desired
 
+    1. Set up skeleton of routing system for resources
+    2. Decide what to do for authentication and JSON web tokens
+    3. Implement authentication and JSON web tokens
+    4. Fill out routes with controllers
+
 5. WILL SKIP FOR NOW Build frontends:
 
     - https://www.theodinproject.com/lessons/javascript-working-with-apis: resource on working with fetch and APIs from frontend perspective
