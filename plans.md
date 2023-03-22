@@ -46,6 +46,7 @@
     2. Decide what to do for authentication and JSON web tokens
     3. Implement authentication and JSON web tokens
     4. Fill out routes with controllers
+    5. Implement bcrypt
 
 5. WILL SKIP FOR NOW Build frontends:
 
