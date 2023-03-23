@@ -21,17 +21,19 @@ passport.use(new LocalStrategy({
     }
 ));
 
-// For protecting certain routes
-// passport.use(new JWTStrategy({
-//         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-//         secretOrKey: process.env.JWT_STRATEGY_SECRET,
-//     },
-//     (jwtPayload, done) => {
-//         // TODO: consider whether top-level return here is needed
-//         return User.findById(jwtPayload.id)
-//             // TODO: repeating arguments below in "done" might not be necessary since they 
-//             // are already arguments in the arrow function
-//             .then(user => done(null, user))
-//             .catch(err => done(err));
-//     }
-// ));
+// NOTE: For protecting certain routes
+passport.use(new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_STRATEGY_SECRET,
+    },
+    (jwtPayload, done) => {
+        // TODO: consider whether top-level return here is needed
+        // NOTE: have to explicitly choose _id rather than id below, since the payload 
+        // is no longer a mongoose document (see conversion to JSON in loginPost controller)
+        return User.findById(jwtPayload._id)
+            .then(user => {
+                return done(null, user);
+            })
+            .catch(err => done(err));
+    }
+));
