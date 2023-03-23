@@ -72,7 +72,12 @@ exports.putPost = (req, res, next) => {
     res.send("TODO: implement putPost");
 };
 
+// TODO: protect this
 exports.deletePost = (req, res, next) => {
-    // Post.findById(req.params.postid)
-    // .then((deletedPost))
+    Post.findByIdAndDelete(req.params.postid)
+    .then(() => {
+        // TODO: sort out 'next'
+        return next();
+    })
+    .catch((err) => next(err));
 };
