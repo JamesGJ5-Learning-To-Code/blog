@@ -53,11 +53,9 @@
     6. DONE Fill out routes with controllers
     7. DONE Protect whichever routes must be protected, as in https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
     8. Implement CORS
-    9. Tidy up directory structure
+    9. DONE Tidy up directory structure
     10. Implement bcrypt
-    11. Sort out errors and set status codes where apt
-        - Example: I don't think next() does what I want it to right now
-        - Maybe use orFail in such a way to produce 404 error
+    11. PRETTY MUCH DONE Sort out errors and set status codes where apt
 
 5. WILL SKIP FOR NOW Build frontends:
 
