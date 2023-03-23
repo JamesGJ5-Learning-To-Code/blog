@@ -2,58 +2,55 @@ const Comment = require("../models/comment");
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 
-// TODO: If the post in question is unpublished, authenticate such that these comments can 
-// only be retrieved by the blogger
+// TODO: protect against those not authenticated as the blogger if post is unpublished
 exports.getComments = (req, res, next) => {
     Comment.find({postCommentedOn: req.params.postid})
         .sort({createdAt: -1})
-    .then((foundComments) => {
-        res.json(foundComments);
-    })
-    .catch((err) => next(err));
+    .then(foundComments => res.json(foundComments))
+    .catch(err => next(err));
 };
 
-// TODO: for all of the below, require authentication of the COMMENTER
+// TODO: for postComment and putComment, require authentication of the COMMENTER. For 
+// deleteComment, require authentication of the commenter OR the blogger.
 
 exports.postComment = [
     body("text")
         .trim()
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Please give this comment some text")
         .escape(),
     body("authorEmail")
+        .trim()
         .isEmail()
         .withMessage("Please give this comment a valid author email")
-        .trim()
         .escape()
         .normalizeEmail(),
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            // TODO: sort out this error handling in particular
             return next(errorResultObject.array());
         }
-        Post.findById(req.params.postid)
-        .then((foundPost) => {
-            // TODO: review the below; might be able to replace it with orFail()
+        const { postid } = req.params;
+        Post.findById(postid)
+        .then(foundPost => {
             if (foundPost === null) {
                 const err = new Error("Post not found");
                 err.status = 404;
                 return next(err);
-            // TODO: review the below
             } else if (foundPost.isPublished === false) {
                 const err = new Error("Post not published");
                 err.status = 403;
                 return next(err);
             }
+            const { text, authorEmail } = req.body;
             const newComment = new Comment({
-                text: req.body.text,
-                authorEmail: req.body.authorEmail,
-                postCommentedOn: req.params.postid,
+                text,
+                authorEmail,
+                postCommentedOn: postid,
             });
             newComment.save()
             .then(() => next())
-            .catch((err) => next(err));
+            .catch(err => next(err));
         })
         .catch(err => next(err));
     }
@@ -68,23 +65,25 @@ exports.putComment = [
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            // TODO: sort out this error handling in particular
             return next(errorResultObject.array());
         }
+        const { text } = req.body;
+        const { commentid } = req.params;
         const updateComment = new Comment({
-            text: req.body.text,
-            _id: req.params.commentid,
+            text,
+            _id: commentid,
         });
-        Comment.findByIdAndUpdate(req.params.commentid, updateComment, {})
+        Comment.findByIdAndUpdate(commentid, updateComment, {})
         .then(() => next())
-        .catch((err) => next(err));
+        .catch(err => next(err));
     }   
 ];
 
 exports.deleteComment = (req, res, next) => {
     // TODO: consider whether commenter should only be able to delete their comments that 
-    // are on published posts etc; there may be privacy laws relevant here
-    Comment.findByIdAndDelete(req.params.commentid)
+    // are on published posts etc
+    const { commentid } = req.params;
+    Comment.findByIdAndDelete(commentid)
     .then(() => next())
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };

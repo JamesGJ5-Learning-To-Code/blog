@@ -9,7 +9,6 @@ router.get("/:postid", postControllers.getPost);
 router.post("/", postControllers.postPost);
 router.put("/:postid", postControllers.putPost);
 router.delete("/:postid", postControllers.deletePost);
-// TODO: consider adding more routes
 
 router.use("/:postid/comments", commentRouter);
 

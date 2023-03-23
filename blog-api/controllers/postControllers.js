@@ -1,27 +1,24 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 
-// TODO: have it so that, if the authentication is successful, ALL posts are retrieved, but 
-// if the authentication is unsuccessful, only published posts are retrieved; might have to 
-// permit a certain token to be given to the visitor that logs in if they log in 
-// unsuccessfully, with that token allowing only the former set of posts to be retrieved
+// TODO: successful authentication of blogger should allow ALL posts to be retrieved. 
+// Unsuccessful authentication of blogger should allow ONLY PUBLISHED posts to be 
+// retrieved. Might just have it so that published posts get a separate route to 
+// all posts.
 exports.getPosts = (req, res, next) => {
     Post.find({})
         .sort({createdAt: -1})
-    .then((foundPosts) => {
+    .then(foundPosts => {
         res.json(foundPosts);
     })
-    // TODO: sort out 'next'
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };
 
-// TODO: protect when the post is unpublished
+// TODO: protect for unpublished posts
 exports.getPost = (req, res, next) => {
     Post.findById(req.params.postid)
-    .then((foundPost) => {
-        // TODO: review the below; might be able to replace it with orFail()
+    .then(foundPost => {
         if (foundPost === null) {
             const err = new Error("Post not found");
             err.status = 404;
@@ -29,20 +26,19 @@ exports.getPost = (req, res, next) => {
         }
         res.json(foundPost);
     })
-    // TODO: sort out next below
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };
 
-// TODO: this needs to be protected
+// TODO: protect completely
 exports.postPost = [
     body("title")
         .trim()
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Please give this post a title")
         .escape(),
     body("text")
         .trim()
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Please give this post some text")
         .escape(),
     body("isPublished")
@@ -50,69 +46,61 @@ exports.postPost = [
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            // TODO: sort out this error handling in particular
             return next(errorResultObject.array());
         }
+        const { title, text, isPublished } = req.body;
         const newPost = new Post({
-            title: req.body.title,
-            text: req.body.text,
-            isPublished: req.body.isPublished,
+            title,
+            text,
+            isPublished,
         });
         newPost.save()
-        .then(() => {
-            // TODO: sort out next
-            next();
-        })
-        // TODO: sort out 'next'
-        .catch((err) => next(err));
+        .then(() => next())
+        .catch(err => next(err));
     }
 ];
 
-// TODO: protect this
+// TODO: protect completely
 exports.putPost = [
     body("title")
         .trim()
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Please give this post a title")
         .escape(),
     body("text")
         .trim()
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Please give this post some text")
         .escape(),
     body("isPublished")
-        // TODO: make sure that, if isPublished isn't supplied in req.body, this function 
-        // will indeed make it false
         .toBoolean(),
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            // TODO: sort out this error handling in particular
             return next(errorResultObject.array());
         }
+        const { title, text, isPublished } = req.body;
+        const { postid } = req.params;
         const updatePost = new Post({
-            title: req.body.title,
-            text: req.body.text,
-            isPublished: req.body.isPublished,
-            _id: req.params.postid,
+            title,
+            text,
+            isPublished,
+            _id: postid,
         });
-        Post.findByIdAndUpdate(req.params.postid, updatePost, {})
+        Post.findByIdAndUpdate(postid, updatePost, {})
         .then(() => next())
-        .catch((err) => next(err));
+        .catch(err => next(err));
     }
 ];
 
-// TODO: protect this
-// TODO: add to this the deletion of all comments under this post
+// TODO: protect completely
 exports.deletePost = (req, res, next) => {
-    Comment.deleteMany({postCommentedOn: req.params.postid})
+    const { postid } = req.params;
+    Comment.deleteMany({ postCommentedOn: postid })
     .then(() => {
-        Post.findByIdAndDelete(req.params.postid)
-        .then(() => {
-            // TODO: sort out 'next'
-            return next();
-        })
-        .catch((err) => next(err));
+        Post.findByIdAndDelete(postid)
+        .then(() => next())
+        .catch(err => next(err));
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 };

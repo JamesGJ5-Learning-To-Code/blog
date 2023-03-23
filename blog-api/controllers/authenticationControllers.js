@@ -11,13 +11,11 @@ exports.loginPost = (req, res, next) => {
                 user,
             });
         }
-        req.login(user, {session: false}, (err) => {
+        req.login(user, {session: false}, err => {
             if (err) {
                 res.send(err);
             }
-            // NOTE: contrary to the tutorial mentioned in plans.md, which isn't 
-            // specific to Mongoose, have to convert document to JSON below for payload 
-            // to be acceptable by the jwt.sign method
+            // NOTE: must convert mongoose document to JSON for payload
             const token = jwt.sign(user.toJSON(), process.env.JWT_STRATEGY_SECRET);
             return res.json({user, token});
         });
