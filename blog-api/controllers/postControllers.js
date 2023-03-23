@@ -6,13 +6,13 @@ const { body, validationResult } = require("express-validator");
 // permit a certain token to be given to the visitor that logs in if they log in 
 // unsuccessfully, with that token allowing only the former set of posts to be retrieved
 exports.getPosts = (req, res, next) => {
-    // Post.find({})
-    //     .sort({createdAt: -1})
-    // .then((foundPosts) => {
-    //     res.json(foundPosts);
-    // })
-    // .catch((err) => next(err));
-    res.send("TODO: implement getPosts");
+    Post.find({})
+        .sort({createdAt: -1})
+    .then((foundPosts) => {
+        res.json(foundPosts);
+    })
+    // TODO: sort out 'next'
+    .catch((err) => next(err));
 };
 
 exports.getPost = (req, res, next) => {
