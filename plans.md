@@ -57,6 +57,7 @@
     10. Implement bcrypt
     11. Sort out errors and set status codes where apt
         - Example: I don't think next() does what I want it to right now
+        - Maybe use orFail in such a way to produce 404 error
 
 5. WILL SKIP FOR NOW Build frontends:
 
