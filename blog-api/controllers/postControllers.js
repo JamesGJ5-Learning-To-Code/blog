@@ -1,4 +1,6 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 
 // TODO: have it so that, if the authentication is successful, ALL posts are retrieved, but 
@@ -103,10 +105,14 @@ exports.putPost = [
 // TODO: protect this
 // TODO: add to this the deletion of all comments under this post
 exports.deletePost = (req, res, next) => {
-    Post.findByIdAndDelete(req.params.postid)
+    Comment.deleteMany({postCommentedOn: req.params.postid})
     .then(() => {
-        // TODO: sort out 'next'
-        return next();
+        Post.findByIdAndDelete(req.params.postid)
+        .then(() => {
+            // TODO: sort out 'next'
+            return next();
+        })
+        .catch((err) => next(err));
     })
     .catch((err) => next(err));
 };
