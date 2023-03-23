@@ -59,7 +59,6 @@ exports.postPost = [
     }
 ];
 
-// TODO: protect completely
 exports.putPost = [
     body("title")
         .trim()
