@@ -51,7 +51,7 @@
     4. DONE Set up database locally
     5. DONE Implement authentication and JSON web tokens (implement route protection later)
     6. DONE Fill out routes with controllers
-    7. Protect whichever routes must be protected, as in https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
+    7. DONE Protect whichever routes must be protected, as in https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
     8. Implement CORS
     9. Tidy up directory structure
     10. Implement bcrypt
