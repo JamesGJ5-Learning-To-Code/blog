@@ -15,8 +15,20 @@ exports.getPosts = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+// TODO: protect when the post is unpublished
 exports.getPost = (req, res, next) => {
-    res.send("TODO: implement getPost");
+    Post.findById(req.params.postid)
+    .then((foundPost) => {
+        // TODO: review the below; might be able to replace it with orFail()
+        if (foundPost === null) {
+            const err = new Error("Post not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.json(foundPost);
+    })
+    // TODO: sort out next below
+    .catch((err) => next(err));
 };
 
 // TODO: this needs to be protected
