@@ -91,7 +91,6 @@ exports.putPost = [
     }
 ];
 
-// TODO: protect completely
 exports.deletePost = (req, res, next) => {
     const { postid } = req.params;
     Comment.deleteMany({ postCommentedOn: postid })
