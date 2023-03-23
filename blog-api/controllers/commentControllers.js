@@ -1,12 +1,27 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 
-// TODO: protect against those not authenticated as the blogger if post is unpublished
+// TODO: extract the isPublished === false check and authentication as prior middleware in 
+// an array below to escape callback hell
 exports.getComments = (req, res, next) => {
-    Comment.find({postCommentedOn: req.params.postid})
-        .sort({createdAt: -1})
-    .then(foundComments => res.json(foundComments))
+    const { postid } = req.params;
+    Post.findById(postid)
+    .then(foundPost => {
+        if (foundPost.isPublished === false) {
+            passport.authenticate('jwt', { session: false }, (err, user, info) => {
+                console.log("Hello");
+                if (err || !user) {
+                    return next(err)
+                }
+            })(req, res, next);
+        }
+        Comment.find({postCommentedOn: postid})
+            .sort({createdAt: -1})
+        .then(foundComments => res.json(foundComments))
+        .catch(err => next(err));
+    })
     .catch(err => next(err));
 };
 
