@@ -55,7 +55,8 @@
     8. Implement CORS
     9. Tidy up directory structure
     10. Implement bcrypt
-    11. Set status codes where apt
+    11. Sort out errors and set status codes where apt
+        - Example: I don't think next() does what I want it to right now
 
 5. WILL SKIP FOR NOW Build frontends:
 
