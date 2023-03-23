@@ -68,11 +68,26 @@ exports.postPost = [
     }
 ];
 
+// TODO: protect this
 exports.putPost = (req, res, next) => {
-    res.send("TODO: implement putPost");
+    body("title")
+        .trim()
+        .isLength({min: 1})
+        .withMessage("Please give this post a title")
+        .escape(),
+    body("text")
+        .trim()
+        .isLength({min: 1})
+        .withMessage("Please give this post some text")
+        .escape(),
+    body("isPublished")
+        // TODO: make sure that, if isPublished isn't supplied in req.body, this function 
+        // will indeed make it false
+        .toBoolean(),
 };
 
 // TODO: protect this
+// TODO: add to this the deletion of all comments under this post
 exports.deletePost = (req, res, next) => {
     Post.findByIdAndDelete(req.params.postid)
     .then(() => {
