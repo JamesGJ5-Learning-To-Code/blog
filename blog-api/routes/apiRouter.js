@@ -1,5 +1,5 @@
 const express = require("express");
-require("../controllers/passport");
+require("../controllers/passportStrategies");
 const authRouter = require("./authRouter");
 const postRouter = require("./postRouter");
 
