@@ -44,8 +44,6 @@ exports.postPost = [
         .withMessage("Please give this post some text")
         .escape(),
     body("isPublished")
-        // TODO: make sure that, if isPublished isn't supplied in req.body, this function 
-        // will indeed make it false
         .toBoolean(),
     (req, res, next) => {
         const errorResultObject = validationResult(req);
