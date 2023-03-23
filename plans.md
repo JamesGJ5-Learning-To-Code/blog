@@ -26,7 +26,7 @@
 
 3. DONE Define models in mongoose
 
-4. Set up routes and controllers RESTfully:
+4. HAVE DONE AS MUCH AS I WILL DO Set up routes and controllers RESTfully:
 
     - Use Postman to make test HTTP requests
 
