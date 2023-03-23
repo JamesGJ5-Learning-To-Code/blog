@@ -1,10 +1,55 @@
+const Comment = require("../models/comment");
+const Post = require("../models/post");
+const { body, validationResult } = require("express-validator");
+
 exports.getComments = (req, res, next) => {
     res.send("TODO: implement getComments");
 };
 
-exports.postComment = (req, res, next) => {
-    res.send("TODO: implement postComment");
-};
+// TODO: might need some authentication to allow comments to be posted under a given email
+exports.postComment = [
+    body("text")
+        .trim()
+        .isLength({min: 1})
+        .withMessage("Please give this comment some text")
+        .escape(),
+    body("authorEmail")
+        .isEmail()
+        .withMessage("Please give this comment a valid author email")
+        .trim()
+        .escape()
+        .normalizeEmail(),
+    (req, res, next) => {
+        const errorResultObject = validationResult(req);
+        if (!errorResultObject.isEmpty()) {
+            // TODO: sort out this error handling in particular
+            return next(errorResultObject.array());
+        }
+        Post.findById(req.params.postid)
+        .then((foundPost) => {
+            // TODO: review the below; might be able to replace it with orFail()
+            if (foundPost === null) {
+                const err = new Error("Post not found");
+                err.status = 404;
+                return next(err);
+            // TODO: review the below
+            } else if (foundPost.isPublished === false) {
+                const err = new Error("Post not published");
+                err.status = 403;
+                return next(err);
+            }
+            const newComment = new Comment({
+                text: req.body.text,
+                authorEmail: req.body.authorEmail,
+                postCommentedOn: req.params.postid,
+            });
+            newComment.save()
+            .then(() => next())
+            .catch((err) => next(err));
+        })
+        .catch(err => next(err));
+    }
+];
 
 exports.putComment = (req, res, next) => {
     res.send("TODO: implement putComment");
