@@ -2,8 +2,15 @@ const Comment = require("../models/comment");
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 
+// TODO: If the post in question is unpublished, authenticate such that these comments can 
+// only be retrieved by the blogger
 exports.getComments = (req, res, next) => {
-    res.send("TODO: implement getComments");
+    Comment.find({postCommentedOn: req.params.postid})
+        .sort({createdAt: -1})
+    .then((foundComments) => {
+        res.json(foundComments);
+    })
+    .catch((err) => next(err));
 };
 
 // TODO: might need some authentication to allow comments to be posted under a given email
