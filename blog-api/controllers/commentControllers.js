@@ -59,9 +59,27 @@ exports.postComment = [
     }
 ];
 
-exports.putComment = (req, res, next) => {
-    res.send("TODO: implement putComment");
-};
+exports.putComment = [
+    body("text")
+        .trim()
+        .isLength({min: 1})
+        .withMessage("Please give this comment some text")
+        .escape(),
+    (req, res, next) => {
+        const errorResultObject = validationResult(req);
+        if (!errorResultObject.isEmpty()) {
+            // TODO: sort out this error handling in particular
+            return next(errorResultObject.array());
+        }
+        const updateComment = new Comment({
+            text: req.body.text,
+            _id: req.params.commentid,
+        });
+        Comment.findByIdAndUpdate(req.params.commentid, updateComment, {})
+        .then(() => next())
+        .catch((err) => next(err));
+    }   
+];
 
 exports.deleteComment = (req, res, next) => {
     // TODO: consider whether commenter should only be able to delete their comments that 
