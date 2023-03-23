@@ -67,7 +67,7 @@ exports.postPost = [
 ];
 
 // TODO: protect this
-exports.putPost = (req, res, next) => {
+exports.putPost = [
     body("title")
         .trim()
         .isLength({min: 1})
@@ -82,7 +82,23 @@ exports.putPost = (req, res, next) => {
         // TODO: make sure that, if isPublished isn't supplied in req.body, this function 
         // will indeed make it false
         .toBoolean(),
-};
+    (req, res, next) => {
+        const errorResultObject = validationResult(req);
+        if (!errorResultObject.isEmpty()) {
+            // TODO: sort out this error handling in particular
+            return next(errorResultObject.array());
+        }
+        const updatePost = new Post({
+            title: req.body.title,
+            text: req.body.text,
+            isPublished: req.body.isPublished,
+            _id: req.params.postid,
+        });
+        Post.findByIdAndUpdate(req.params.postid, updatePost, {})
+        .then(() => next())
+        .catch((err) => next(err));
+    }
+];
 
 // TODO: protect this
 // TODO: add to this the deletion of all comments under this post
