@@ -52,9 +52,10 @@
     5. DONE Implement authentication and JSON web tokens (implement route protection later)
     6. Fill out routes with controllers
     7. Protect whichever routes must be protected, as in https://dev.to/_arpy/learn-using-jwt-with-passport-authentication-22n8
-    8. Tidy up directory structure
-    9. Implement bcrypt
-    10. Set status codes where apt
+    8. Implement CORS
+    9. Tidy up directory structure
+    10. Implement bcrypt
+    11. Set status codes where apt
 
 5. WILL SKIP FOR NOW Build frontends:
 
