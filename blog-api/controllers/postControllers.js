@@ -29,7 +29,6 @@ exports.getPost = (req, res, next) => {
     .catch(err => next(err));
 };
 
-// TODO: protect completely
 exports.postPost = [
     body("title")
         .trim()
