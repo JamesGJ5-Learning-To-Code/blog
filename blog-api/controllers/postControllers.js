@@ -55,7 +55,7 @@ exports.postPost = [
             isPublished,
         });
         newPost.save()
-        .then(() => next())
+        .then(() => res.sendStatus(200))
         .catch(err => next(err));
     }
 ];
@@ -76,7 +76,8 @@ exports.putPost = [
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            return next(errorResultObject.array());
+            // TODO: send error messages in response
+            return res.sendStatus(400);
         }
         const { title, text, isPublished } = req.body;
         const { postid } = req.params;
@@ -87,7 +88,7 @@ exports.putPost = [
             _id: postid,
         });
         Post.findByIdAndUpdate(postid, updatePost, {})
-        .then(() => next())
+        .then(() => res.sendStatus(200))
         .catch(err => next(err));
     }
 ];
@@ -97,7 +98,7 @@ exports.deletePost = (req, res, next) => {
     Comment.deleteMany({ postCommentedOn: postid })
     .then(() => {
         Post.findByIdAndDelete(postid)
-        .then(() => next())
+        .then(() => res.sendStatus(200))
         .catch(err => next(err));
     })
     .catch(err => next(err));

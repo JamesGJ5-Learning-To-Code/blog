@@ -13,6 +13,7 @@ exports.getComments = (req, res, next) => {
             passport.authenticate('jwt', { session: false }, (err, user, info) => {
                 console.log("Hello");
                 if (err || !user) {
+                    // TODO: return same thing as in passport
                     return next(err)
                 }
             })(req, res, next);
@@ -43,7 +44,8 @@ exports.postComment = [
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            return next(errorResultObject.array());
+            // TODO: send error messages in response
+            return res.sendStatus(400);
         }
         const { postid } = req.params;
         Post.findById(postid)
@@ -64,7 +66,7 @@ exports.postComment = [
                 postCommentedOn: postid,
             });
             newComment.save()
-            .then(() => next())
+            .then(() => res.sendStatus(200))
             .catch(err => next(err));
         })
         .catch(err => next(err));
@@ -80,7 +82,8 @@ exports.putComment = [
     (req, res, next) => {
         const errorResultObject = validationResult(req);
         if (!errorResultObject.isEmpty()) {
-            return next(errorResultObject.array());
+            // TODO: send error messages in response
+            return res.sendStatus(400);
         }
         const { text } = req.body;
         const { commentid } = req.params;
@@ -99,6 +102,6 @@ exports.deleteComment = (req, res, next) => {
     // are on published posts etc
     const { commentid } = req.params;
     Comment.findByIdAndDelete(commentid)
-    .then(() => next())
+    .then(() => res.sendStatus(200))
     .catch(err => next(err));
 };
