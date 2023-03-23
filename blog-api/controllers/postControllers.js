@@ -59,8 +59,9 @@ exports.postPost = [
             isPublished: req.body.isPublished,
         });
         newPost.save()
-        .then((savedPost) => {
-            res.json(savedPost);
+        .then(() => {
+            // TODO: sort out next
+            next();
         })
         // TODO: sort out 'next'
         .catch((err) => next(err));
@@ -72,5 +73,6 @@ exports.putPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-    res.send("TODO: implement deletePost");
+    // Post.findById(req.params.postid)
+    // .then((deletedPost))
 };
