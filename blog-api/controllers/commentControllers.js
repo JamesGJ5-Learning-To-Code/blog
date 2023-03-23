@@ -13,7 +13,8 @@ exports.getComments = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// TODO: might need some authentication to allow comments to be posted under a given email
+// TODO: for all of the below, require authentication of the COMMENTER
+
 exports.postComment = [
     body("text")
         .trim()
