@@ -64,5 +64,9 @@ exports.putComment = (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
-    res.send("TODO: implement deleteComment");
+    // TODO: consider whether commenter should only be able to delete their comments that 
+    // are on published posts etc; there may be privacy laws relevant here
+    Comment.findByIdAndDelete(req.params.commentid)
+    .then(() => next())
+    .catch((err) => next(err));
 };
