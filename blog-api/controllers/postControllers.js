@@ -16,6 +16,7 @@ exports.getPosts = (req, res, next) => {
 };
 
 // TODO: protect for unpublished posts
+// NOTE: see ../commentControllers for inspiration (specifically getComments)
 exports.getPost = (req, res, next) => {
     Post.findById(req.params.postid)
     .then(foundPost => {
